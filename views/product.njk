@@ -2,7 +2,7 @@
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="/categories">Categories</a></li>
-  <li class="breadcrumb-item"><a href="/categories/{{category.id}}/products">{{category.label}}</a></li>
+  <li class="breadcrumb-item"><a href="/categories/{{product.category.id}}/products">{{product.category.label}}</a></li>
   <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
 {% endblock %}
 
