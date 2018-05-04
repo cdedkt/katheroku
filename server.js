@@ -23,7 +23,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static("public"));
 
-app.get("/", getHome);
+app.get("/", getCategories);
 app.get("/menu", getMenu);
 app.get("/categories/:id/products", getProductsFromCategory);
 app.get("/categories/:id", getCategory);
