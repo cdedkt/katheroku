@@ -1,0 +1,31 @@
+{% extends "layout.njk" %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="/categories">Categories</a></li>
+  <li class="breadcrumb-item active" aria-current="page">{{category.label}}</li>
+{% endblock %}
+
+
+{% block content %}
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      {% for product in products %}
+      <div class="col-12 col-md-4">
+
+        <div class="card mb-4 box-shadow">
+          <img class="card-img-top" src="https://www.decathlon.fr/media/{{product.image_path}}" alt="Decathlon">
+          <div class="card-body">
+            <a href="/products/{{product.id}}">
+              <p class="card-text">{{product.title}}</p>
+            </a>
+            <small class="text-muted">Réf: {{product.decathlon_id}}</small>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
