@@ -19,6 +19,7 @@ function findAll() {
 }
 
 function findById(id) {
+  //console.log("brand.findById begin");
   const client = new PG.Client(process.env.DATABASE_URL);
   client.connect();
 
@@ -28,6 +29,7 @@ function findById(id) {
     .then((result) => result.rows)
     .then((data) => {
       client.end();
+	  //console.log("brand.findById end");
       return data;
     })
     .catch((error) => {

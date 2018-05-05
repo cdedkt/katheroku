@@ -30,7 +30,7 @@ app.get("/categories/:id", getCategory);
 app.get("/categories", getCategories);
 app.get("/brands/:id", getBrand);
 app.get("/brands", getBrands);
-app.get("/products/:id", getProduct);
+app.get("/products/:id/category/:category", getProduct);
 app.get("/products", getProducts);
 app.get("*", function(request, result) {
   result.send("page not found !!");

@@ -46,7 +46,7 @@ function getProductsFromCategory(category_id) {
     .then((result) => result.rows)
     .then((data) => {
       client.end();
-      return data;
+     return data;
     })
     .catch((error) => {
       console.warn(error);
@@ -55,6 +55,7 @@ function getProductsFromCategory(category_id) {
 }
 
 function getCategoryFromProduct(product_id) {
+  //console.log("categories.getCategoryFromProduct begin");
   const client = new PG.Client(process.env.DATABASE_URL);
   client.connect();
 
@@ -64,12 +65,14 @@ function getCategoryFromProduct(product_id) {
     .then((result) => result.rows)
     .then((data) => {
       client.end();
+	  //console.log("categories.getCategoryFromProduct end");
       return data;
     })
     .catch((error) => {
       console.warn(error);
       client.end();
     });
+	
 }
 
 function insertCategories(categories) {

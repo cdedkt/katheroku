@@ -12,52 +12,34 @@ function completeDisplay(products) {
 
 function getProductWithDetail(productId) {
   return products.findById(productId)
-  .then((rows) => {
-	return rows[0];
-  })
-  .then((product) => {
-    return categories.getCategoryFromProduct(product.id)
-     .then((rows) => {
-       //console.log("category", rows[0]);
-	   product.category = rows[0];
-	   //console.log("product with category", product);
+  .then(rows => rows[0])
+  .then(product => categories.getCategoryFromProduct(product.id)
+     .then(rows => {
+       product.categories = rows;
 	   return product;
 	 })
-  })
-  .then((product) => {
-    return brands.findById(product.brand_id)
-	 .then((rows) => {
+  )
+  .then(product => brands.findById(product.brand_id)
+	 .then(rows => {
 	   product.brand = rows[0];
-	   //console.log("product with brand", product);
 	   return product;
 	 })
-  })
-  .then((product) => completeDisplay([product])[0]);
+  )
+  .then(product => completeDisplay([product])[0]);
 }
+
 
 function getProductWithDetail2(productId) {
   return products.findById(productId)
-  .then((rows) => {
-	return rows[0];
-  })
-  .then((product) => {
-    return categories.getCategoryFromProduct(product.id)
-     .then((rows) => {
-       //console.log("category", rows[0]);
-	   product.category = rows[0];
-	   //console.log("product with category", product);
-	   return product;
-	 })
-  })
-  .then((product) => {
-    return brands.findById(product.brand_id)
-	 .then((rows) => {
-	   product.brand = rows[0];
-	   //console.log("product with brand", product);
-	   return product;
-	 })
-  })
-  .then((product) => completeDisplay([product])[0]);
+  .then(rows => rows[0])
+  .then(product => Promise.all([categories.getCategoryFromProduct(product.id), brands.findById(product.brand_id)])
+	.then(values => {
+	  product.categories = values[0];
+	  product.brand = values[1][0];
+	  return product;
+	})
+  )
+  .then(product => completeDisplay([product])[0]);
 }
 
 module.exports = {
