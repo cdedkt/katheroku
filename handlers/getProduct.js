@@ -1,9 +1,10 @@
 const productsService = require("../services/productsService");
 
 function getProduct(request, result) {
-  productService.getProductWithDetail(request.params.id)
+  productsService.getProductWithDetail(request.params.id)
   .then((product) => {
-     result.render("product", {product: product});
+    //console.log("product from service", product);
+    result.render("product", {product: product});
   });
 }
 
