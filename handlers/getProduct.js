@@ -1,11 +1,20 @@
 const productsService = require("../services/productsService");
 
+
 function getProduct(request, result) {
-  productsService.getProductWithDetail2(request.params.id)
+  const productId = request.params.id;
+  const categoryId = request.params.category;
+  
+  productsService.getProductWithDetail2(productId)
   .then(product => {
-	currentCategory = product.categories.filter(categorie => categorie.id===request.params.category)[0];
-    //console.log("product from service=", product, "currentCategory=", currentCategory);
-    result.render("product", {product: product, currentCategory: currentCategory});
+	const currentCategory = product.categories.filter(categoryElement => categoryElement.id===categoryId)[0];
+	product.categoryId = currentCategory.id;
+	
+	let productsHistory = productsService.getProductsHistory(request);
+	productsHistory = productsService.addProductToHistory(productsHistory, product);
+	
+	console.log("product from service=", product, "\n currentCategory=", currentCategory, "\n productsHistory=", productsHistory);
+    result.render("product", {product: product, currentCategory: currentCategory, productsHistory: productsHistory});
   });
 }
 

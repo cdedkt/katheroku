@@ -1,5 +1,6 @@
 const getHome = require("./handlers/getHome");
 const getMenu = require("./handlers/getMenu");
+const getLogout = require("./handlers/getLogout");
 const getCategories = require("./handlers/getCategories");
 const getCategory = require("./handlers/getCategory");
 const getProductsFromCategory = require("./handlers/getProductsFromCategory");
@@ -9,6 +10,7 @@ const getBrands = require("./handlers/getBrands");
 const getBrand = require("./handlers/getBrand");
 
 const express = require("express");
+const session = require("express-session");
 const nunjucks = require("nunjucks");
 
 const app = express();
@@ -18,10 +20,10 @@ nunjucks.configure("views", {
 });
 app.set("views", __dirname + "/views");
 app.set("view engine", "njk");
+app.use(session({secret: 'ssshhhhh'}));
+app.use(express.static("public"));
 
 const port = process.env.PORT || 3000;
-
-app.use(express.static("public"));
 
 app.get("/", getCategories);
 app.get("/menu", getMenu);
@@ -32,6 +34,8 @@ app.get("/brands/:id", getBrand);
 app.get("/brands", getBrands);
 app.get("/products/:id/category/:category", getProduct);
 app.get("/products", getProducts);
+app.get('/logout',getLogout);
+
 app.get("*", function(request, result) {
   result.send("page not found !!");
 })

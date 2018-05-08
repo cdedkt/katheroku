@@ -2,10 +2,10 @@
 const categories = require("../entities/categories");
 
 function getProductsFromCategory(request, result) {
-  categories.getProductsFromCategory(request.params.id)
-  .then((rows) => {
-    const products = rows;
-    categories.findById(request.params.id)
+  const currentCategoryId = request.params.id;
+  categories.getProductsFromCategory(currentCategoryId)
+  .then((products) => {
+    categories.findById(currentCategoryId)
     .then((rows) => {
       result.render("productscategory", {products: products, category: rows[0]});
     });

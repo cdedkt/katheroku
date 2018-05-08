@@ -2,6 +2,8 @@ const products = require("../entities/products");
 const categories = require("../entities/categories");
 const brands = require("../entities/brands");
 
+const tools = require("../services/tools");
+
 
 function completeDisplay(products) {
   return products.map((product) => {
@@ -42,7 +44,35 @@ function getProductWithDetail2(productId) {
   .then(product => completeDisplay([product])[0]);
 }
 
+
+function getProductsHistory(request) {
+	const sess = request.session;
+	if (!sess.productsHistory) {
+	  let productsHistory = [];
+	  sess.productsHistory = productsHistory;
+	}
+	console.log("sess.productsHistory=", sess.productsHistory);
+	return sess.productsHistory;
+}
+
+function saveProductsHistory(request, productsHistory) {
+	const sess = request.session;
+	sess.productsHistory = productsHistory;
+}
+
+function addProductToHistory(productsHistory, productToAdd) {
+	if (!productsHistory.some(product => product.id === productToAdd.id)) {
+		productsHistory.unshift(productToAdd);
+	}
+	if (productsHistory.length > 4) {
+		productsHistory.pop();
+	} 
+	return productsHistory;
+}
+
 module.exports = {
   getProductWithDetail: getProductWithDetail,
-  getProductWithDetail2: getProductWithDetail2
+  getProductWithDetail2: getProductWithDetail2,
+  addProductToHistory: addProductToHistory,
+  getProductsHistory: getProductsHistory
 }
