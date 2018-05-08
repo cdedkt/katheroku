@@ -20,7 +20,7 @@ nunjucks.configure("views", {
 });
 app.set("views", __dirname + "/views");
 app.set("view engine", "njk");
-app.use(session({secret: 'ssshhhhh'}));
+app.use(session({secret: 'lafeteatoto', resave: true, saveUninitialized: true}));
 app.use(express.static("public"));
 
 const port = process.env.PORT || 3000;
