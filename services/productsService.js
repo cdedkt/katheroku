@@ -44,42 +44,6 @@ function getProductWithDetail2(productId) {
   .then(product => completeDisplay([product])[0]);
 }
 
-
-function getProductsHistory(request) {
-	const sess = request.session;
-	if (!sess.productsHistory) {
-	  const productsHistory = {
-		  toDisplay: [],
-		  last: ""
-	  };
-	  sess.productsHistory = productsHistory;
-	}
-	console.log("sess.productsHistory=", sess.productsHistory);
-	return sess.productsHistory;
-}
-
-function saveProductsHistory(request, productsHistory) {
-	const sess = request.session;
-	sess.productsHistory = productsHistory;
-}
-
-function addProductToHistory(productsHistory, productToAdd) {
-	if (productsHistory.last) {
-		if (!productsHistory.toDisplay.some(product => product.id === productsHistory.last.id)) {
-			productsHistory.toDisplay.unshift(productsHistory.last);
-		}
-	}
-	productsHistory.last = productToAdd;
-	
-	if (productsHistory.toDisplay.length > 6) {
-		productsHistory.toDisplay.pop();
-	} 
-	return productsHistory;
-}
-
 module.exports = {
-  getProductWithDetail: getProductWithDetail,
-  getProductWithDetail2: getProductWithDetail2,
-  addProductToHistory: addProductToHistory,
-  getProductsHistory: getProductsHistory
+  getProductWithDetail2: getProductWithDetail2
 }
