@@ -2,9 +2,6 @@ const products = require("../entities/products");
 const categories = require("../entities/categories");
 const brands = require("../entities/brands");
 
-const tools = require("../services/tools");
-
-
 function completeDisplay(products) {
   return products.map((product) => {
     product.image_path = "https://www.decathlon.fr/media/" + product.image_path;

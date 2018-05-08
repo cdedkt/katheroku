@@ -1,16 +1,16 @@
 
 
-function getProductsHistory(request) {
-	const sess = request.session;
-	if (!sess.productsHistory) {
-	  const productsHistory = {
+function getProductsHistory(session) {
+	let productsHistory = {
 		  toDisplay: [],
 		  last: ""
 	  };
-	  sess.productsHistory = productsHistory;
-	}
-	console.log("sess.productsHistory=", sess.productsHistory);
-	return sess.productsHistory;
+	if (!session.productsHistory) {
+	  session.productsHistory = productsHistory;
+	} 
+	productsHistory = session.productsHistory;
+	console.log("productsHistory=", productsHistory);
+	return productsHistory;
 }
 
 function addProductToHistory(productsHistory, productToAdd) {
@@ -27,7 +27,12 @@ function addProductToHistory(productsHistory, productToAdd) {
 	return productsHistory;
 }
 
+function saveProductsHistory(session, productsHistory) {
+		session.productsHistory = productsHistory;
+}
+
 module.exports = {
   getProductsHistory: getProductsHistory,
-  addProductToHistory: addProductToHistory
+  addProductToHistory: addProductToHistory,
+  saveProductsHistory: saveProductsHistory
 }
