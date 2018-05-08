@@ -56,8 +56,8 @@
 <div class="container pt-3 mb-3">
   <p class="mb-0">Mes dernières consultations</p>
   <div class="row pt-2">
-	{% for product in productsHistory %}
-      <div class="col-4 col-lg-3">
+	{% for product in productsHistory.toDisplay %}
+      <div class="col-4 col-lg-2">
         <div class="card box-shadow">
 		  <a href="/products/{{product.id}}/category/{{product.categoryId}}">
             <img class="card-img-top" src="{{product.image_path}}" alt="Decathlon">

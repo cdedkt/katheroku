@@ -48,7 +48,10 @@ function getProductWithDetail2(productId) {
 function getProductsHistory(request) {
 	const sess = request.session;
 	if (!sess.productsHistory) {
-	  let productsHistory = [];
+	  const productsHistory = {
+		  toDisplay: [],
+		  last: ""
+	  };
 	  sess.productsHistory = productsHistory;
 	}
 	console.log("sess.productsHistory=", sess.productsHistory);
@@ -61,11 +64,15 @@ function saveProductsHistory(request, productsHistory) {
 }
 
 function addProductToHistory(productsHistory, productToAdd) {
-	if (!productsHistory.some(product => product.id === productToAdd.id)) {
-		productsHistory.unshift(productToAdd);
+	if (productsHistory.last) {
+		if (!productsHistory.toDisplay.some(product => product.id === productsHistory.last.id)) {
+			productsHistory.toDisplay.unshift(productsHistory.last);
+		}
 	}
-	if (productsHistory.length > 4) {
-		productsHistory.pop();
+	productsHistory.last = productToAdd;
+	
+	if (productsHistory.toDisplay.length > 6) {
+		productsHistory.toDisplay.pop();
 	} 
 	return productsHistory;
 }
