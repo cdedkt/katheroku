@@ -1,10 +1,9 @@
-
-const categories = require("../entities/categories");
+const productsService = require("../services/productsService");
 
 function getCategories(request, result) {
-  categories.findAll()
-  .then((rows) => {
-    result.render("categories", {categories: rows});
+  productsService.getAllCategories()
+  .then((categories) => {
+    result.render("categories", {categories: categories});
   });
 }
 

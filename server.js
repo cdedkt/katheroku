@@ -1,5 +1,4 @@
 const getHome = require("./handlers/getHome");
-const getMenu = require("./handlers/getMenu");
 const getLogout = require("./handlers/getLogout");
 const getCategories = require("./handlers/getCategories");
 const getCategory = require("./handlers/getCategory");
@@ -8,6 +7,7 @@ const getProducts = require("./handlers/getProducts");
 const getProduct = require("./handlers/getProduct");
 const getBrands = require("./handlers/getBrands");
 const getBrand = require("./handlers/getBrand");
+const getSearchProducts = require("./handlers/getSearchProducts");
 
 const express = require("express");
 const session = require("express-session");
@@ -26,15 +26,17 @@ app.use(express.static("public"));
 const port = process.env.PORT || 3000;
 
 app.get("/", getCategories);
-app.get("/menu", getMenu);
-app.get("/categories/:id/products", getProductsFromCategory);
-app.get("/categories/:id", getCategory);
 app.get("/categories", getCategories);
-app.get("/brands/:id", getBrand);
-app.get("/brands", getBrands);
+app.get("/categories/:id/products", getProductsFromCategory);
 app.get("/products/:id/category/:category", getProduct);
+
+app.get("/categories/:id", getCategory);
+app.get("/brands", getBrands);
+app.get("/brands/:id", getBrand);
 app.get("/products", getProducts);
+
 app.get('/logout',getLogout);
+app.get("/acheter", getSearchProducts);
 
 app.get("*", function(request, result) {
   result.send("page not found !!");

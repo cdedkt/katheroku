@@ -6,13 +6,41 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
   </head>
   <body>
-    <div class="container-fluid">
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Menu
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="/categories">Categories</a>
+              <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+          </li>
+        </ul>
+        <div class="text-white mr-auto d-none d-lg-block">
+          <h4>DECATHLON</h4>
+        </div>
+        <form class="form-inline my-2 my-lg-0" action="/acheter"  method="get">
+          <input class="form-control mr-sm-2" type="search" name="labelsToFind" placeholder="Rechercher un produit">
+          <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+  
+    <!--<div class="container-fluid">
       <div class="row bg-primary pt-2 pb-2 text-center text-white">
         <div class="col">
             <h4>DECATHLON</h4>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">

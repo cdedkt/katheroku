@@ -9,7 +9,7 @@ function getProductsHistory(session) {
 	  session.productsHistory = productsHistory;
 	} 
 	productsHistory = session.productsHistory;
-	console.log("productsHistory=", productsHistory);
+	//console.log("productsHistory=", productsHistory);
 	return productsHistory;
 }
 

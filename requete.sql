@@ -1,3 +1,5 @@
+Heroku d6t72mk6uevtrs
+
 select * from brands;  --547
 select * from products;  --16904
 select * from category_products; --42923
@@ -26,3 +28,5 @@ delete from products p where
 not exists (select 1 from category_products cp where cp.product_id=p.id);
 
 --select * from category_products where product_id = '2b0df0b5-65c1-4f54-a054-e874afd5695f';
+CREATE EXTENSION unaccent;
+CREATE INDEX CONCURRENTLY ON products (lower(unaccent(title)));

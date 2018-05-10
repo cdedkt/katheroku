@@ -27,7 +27,6 @@ function getProductWithDetail(productId) {
   .then(product => completeDisplay([product])[0]);
 }
 
-
 function getProductWithDetail2(productId) {
   return products.findById(productId)
   .then(rows => rows[0])
@@ -41,6 +40,32 @@ function getProductWithDetail2(productId) {
   .then(product => completeDisplay([product])[0]);
 }
 
+function getAllCategories() {
+  return categories.findAll();	
+}
+
+function getCategory(categoryId) {
+  return categories.findById(categoryId);
+}
+
+function getProductsFromCategory(categoryId) {
+	return products.getProductsFromCategory(categoryId)
+	.then(products => completeDisplay(products));
+}
+
+function searchProducts(labels) {
+	const labelsList = labels.split(" ");
+	return Promise.all([products.getProductsFromTitle(labelsList)])
+	.then(values => {
+	  return values[0];
+	})
+	.then(products => completeDisplay(products));
+}
+
 module.exports = {
-  getProductWithDetail2: getProductWithDetail2
+  getAllCategories: getAllCategories,
+  getCategory: getCategory,
+  getProductWithDetail: getProductWithDetail2,
+  getProductsFromCategory: getProductsFromCategory,
+  searchProducts: searchProducts
 }

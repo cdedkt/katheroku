@@ -1,13 +1,13 @@
-
-const categories = require("../entities/categories");
+const productsService = require("../services/productsService");
 
 function getProductsFromCategory(request, result) {
   const currentCategoryId = request.params.id;
-  categories.getProductsFromCategory(currentCategoryId)
+  productsService.getProductsFromCategory(currentCategoryId)
   .then((products) => {
-    categories.findById(currentCategoryId)
+	//console.log("products=", products);
+    productsService.getCategory(currentCategoryId)
     .then((rows) => {
-      result.render("productscategory", {products: products, category: rows[0]});
+      result.render("productsList", {products: products, category: rows[0]});
     });
   });
 }

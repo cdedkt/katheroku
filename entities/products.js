@@ -36,6 +36,48 @@ function findById(id) {
     });
 }
 
+function getProductsFromCategory(categoryId) {
+  const client = new PG.Client(process.env.DATABASE_URL);
+  client.connect();
+
+  return client.query(
+    "SELECT p.*, lcp.category_id FROM products p inner join category_products lcp on lcp.product_id = p.id where lcp.category_id=$1::uuid",
+    [categoryId])
+    .then((result) => result.rows)
+    .then((data) => {
+      client.end();
+     return data;
+    })
+    .catch((error) => {
+      console.warn(error);
+      client.end();
+    });
+}
+
+function getProductsFromTitle(labelsList) {
+  const client = new PG.Client(process.env.DATABASE_URL);
+  client.connect();
+  
+  const labelsUnaccentLower = labelsList.map(label => label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase());
+  console.log("labelsList=", labelsList, "\nlabelsUnaccentLower=", labelsUnaccentLower);
+  
+  let requeteSql = "SELECT p.*, lcp.category_id FROM products p inner join category_products lcp on lcp.product_id = p.id where (1=1)";
+  labelsUnaccentLower.forEach((label, index) => { 
+	requeteSql += " and strpos(lower(unaccent(p.title)), $" + (index+1) + "::varchar)>0";
+  });
+  
+  return client.query(requeteSql, labelsUnaccentLower)
+    .then((result) => result.rows)
+    .then((data) => {
+      client.end();
+     return data;
+    })
+    .catch((error) => {
+      console.warn(error);
+      client.end();
+    });
+}
+
 function insertProducts(products) {
   console.log("INSERT PRODUCTS : " + products.length + " lines have to be inserted.");
   const client = new PG.Client(process.env.DATABASE_URL);
@@ -73,5 +115,7 @@ function insertNextProduct(client, products, indice) {
 module.exports = {
   findAll: findAll,
   findById: findById,
+  getProductsFromCategory: getProductsFromCategory,
+  getProductsFromTitle: getProductsFromTitle,
   insertProducts: insertProducts
 }
