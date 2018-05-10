@@ -48,16 +48,16 @@ function getCategory(categoryId) {
   return categories.findById(categoryId);
 }
 
-function getProductsFromCategory(categoryId) {
-	return products.getProductsFromCategory(categoryId)
+function getProductsByCategory(categoryId) {
+	return products.getProductsByCategory(categoryId)
 	.then(products => completeDisplay(products));
 }
 
 function searchProducts(labels) {
 	const labelsList = labels.split(" ");
-	return Promise.all([products.getProductsFromTitle(labelsList)])
+	return Promise.all([products.getProductsByTitle(labelsList), products.getProductsByDecathlonId(labels)])
 	.then(values => {
-	  return values[0];
+	  return values[0].concat(values[1]);
 	})
 	.then(products => completeDisplay(products));
 }
@@ -66,6 +66,6 @@ module.exports = {
   getAllCategories: getAllCategories,
   getCategory: getCategory,
   getProductWithDetail: getProductWithDetail2,
-  getProductsFromCategory: getProductsFromCategory,
+  getProductsByCategory: getProductsByCategory,
   searchProducts: searchProducts
 }

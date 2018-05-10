@@ -2,7 +2,7 @@ const productsService = require("../services/productsService");
 
 function getProductsFromCategory(request, result) {
   const currentCategoryId = request.params.id;
-  productsService.getProductsFromCategory(currentCategoryId)
+  productsService.getProductsByCategory(currentCategoryId)
   .then((products) => {
 	//console.log("products=", products);
     productsService.getCategory(currentCategoryId)

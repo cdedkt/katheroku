@@ -36,7 +36,7 @@ function findById(id) {
     });
 }
 
-function getProductsFromCategory(categoryId) {
+function getProductsByCategory(categoryId) {
   const client = new PG.Client(process.env.DATABASE_URL);
   client.connect();
 
@@ -54,12 +54,33 @@ function getProductsFromCategory(categoryId) {
     });
 }
 
-function getProductsFromTitle(labelsList) {
+function getProductsByDecathlonId(decathlonId) {
+  if (isNaN(decathlonId)) {
+	  return [];
+  }
+  const client = new PG.Client(process.env.DATABASE_URL);
+  client.connect();
+
+  return client.query(
+    "SELECT p.*, lcp.category_id FROM products p inner join category_products lcp on lcp.product_id = p.id where p.decathlon_id=$1::integer",
+    [decathlonId])
+    .then((result) => result.rows)
+    .then((data) => {
+      client.end();
+     return data;
+    })
+    .catch((error) => {
+      console.warn(error);
+      client.end();
+    });
+}
+
+function getProductsByTitle(labelsList) {
   const client = new PG.Client(process.env.DATABASE_URL);
   client.connect();
   
   const labelsUnaccentLower = labelsList.map(label => label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase());
-  console.log("labelsList=", labelsList, "\nlabelsUnaccentLower=", labelsUnaccentLower);
+  //console.log("labelsList=", labelsList, "\nlabelsUnaccentLower=", labelsUnaccentLower);
   
   let requeteSql = "SELECT p.*, lcp.category_id FROM products p inner join category_products lcp on lcp.product_id = p.id where (1=1)";
   labelsUnaccentLower.forEach((label, index) => { 
@@ -115,7 +136,8 @@ function insertNextProduct(client, products, indice) {
 module.exports = {
   findAll: findAll,
   findById: findById,
-  getProductsFromCategory: getProductsFromCategory,
-  getProductsFromTitle: getProductsFromTitle,
+  getProductsByCategory: getProductsByCategory,
+  getProductsByTitle: getProductsByTitle,
+  getProductsByDecathlonId: getProductsByDecathlonId,
   insertProducts: insertProducts
 }
