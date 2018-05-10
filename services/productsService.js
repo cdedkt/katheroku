@@ -56,8 +56,17 @@ function getProductsByCategory(categoryId) {
 function searchProducts(labels) {
 	const labelsList = labels.split(" ");
 	return Promise.all([products.getProductsByTitle(labelsList), products.getProductsByDecathlonId(labels)])
-	.then(values => {
-	  return values[0].concat(values[1]);
+	.then(valuesArray => {
+	  //return valuesArray[0].concat(valuesArray[1]);
+	  let results = [];
+	  valuesArray.forEach(values => {
+		  values.forEach(value => {
+			  if (!results.find(result => result.id === value.id)) {
+				  results.push(value);
+			  }
+		  });
+	  });
+      return results;
 	})
 	.then(products => completeDisplay(products));
 }
