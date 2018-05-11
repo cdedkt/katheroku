@@ -6,8 +6,12 @@ function getProductsFromCategory(request, result) {
   .then((products) => {
 	//console.log("products=", products);
     productsService.getCategory(currentCategoryId)
-    .then((rows) => {
-      result.render("productsList", {products: products, category: rows[0]});
+    .then((category) => {
+	  const breadcrumbItems = [];
+	  breadcrumbItems.push({label : "Categories", link: "/categories"});
+	  breadcrumbItems.push({label : category.label, link: null});
+	  
+      result.render("productsList", {products: products, breadcrumbItems: breadcrumbItems});
     });
   });
 }

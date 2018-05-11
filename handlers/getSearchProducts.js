@@ -7,7 +7,11 @@ function getSearchProducts(request, result) {
   
   productsService.searchProducts(labelsToFind)
   .then((products) => {
-    result.render("productsList", {products: products, category: null});
+	const breadcrumbItems = [];
+	breadcrumbItems.push({label : "Categories", link: "/categories"});
+	breadcrumbItems.push({label : labelsToFind, link: null});
+	
+    result.render("productsList", {products: products, breadcrumbItems: breadcrumbItems});
   });
 }
 

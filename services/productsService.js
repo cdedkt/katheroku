@@ -45,7 +45,8 @@ function getAllCategories() {
 }
 
 function getCategory(categoryId) {
-  return categories.findById(categoryId);
+  return categories.findById(categoryId)
+  .then(rows => rows[0]);
 }
 
 function getProductsByCategory(categoryId) {

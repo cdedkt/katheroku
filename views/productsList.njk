@@ -1,8 +1,13 @@
 {% extends "layout.njk" %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="/categories">Categories</a></li>
-  <li class="breadcrumb-item active" aria-current="page">{{category.label}}</li>
+	{% for breadcrumbItem in breadcrumbItems %}
+		{% if (loop.index < breadcrumbItems.length) %}
+			<li class="breadcrumb-item"><a href="{{breadcrumbItem.link}}">{{breadcrumbItem.label}}</a></li>
+		{% else %}
+			<li class="breadcrumb-item active" aria-current="page">{{breadcrumbItem.label}}</li>
+		{% endif %}
+   {% endfor %}
 {% endblock %}
 
 
