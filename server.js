@@ -12,6 +12,7 @@ const getBrand = require("./handlers/getBrand");
 const getSearchProducts = require("./handlers/getSearchProducts");
 
 const express = require("express");
+const cors = require("cors");
 const nunjucks = require("nunjucks");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -37,7 +38,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.get("/register", getRegister);
 
@@ -76,7 +77,7 @@ passport.use(
     // Or, if we don't find any matching user, call the callback function with just an error:
     //   `callback(new Error("no user found"))`
 	console.log("email=", email, ", password=", password);
-	const userObject = usersService.checkUserPassword(email, password); 
+	const userObject = usersService.checkUserPassword(email, password);
 	console.log("userObject=", userObject);
   })
 );
@@ -116,7 +117,7 @@ app.get("/categories/:id/products", getProductsFromCategory);
 app.get("/products/:id/category/:category", getProduct);
 
 app.get("/categories/:id", getCategory);
-app.get("/brands", getBrands);
+app.get("/brands", cors(), getBrands);
 app.get("/brands/:id", getBrand);
 app.get("/products", getProducts);
 
