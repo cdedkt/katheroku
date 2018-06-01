@@ -119,7 +119,7 @@ app.get("/products/:id/category/:category", getProduct);
 app.get("/categories/:id", getCategory);
 app.get("/brands", cors(), getBrands);
 app.get("/brands/:id", getBrand);
-app.get("/products", getProducts);
+app.get("/products", cors(), getProducts);
 
 app.get('/logout',getLogout);
 app.get("/acheter", getSearchProducts);
